@@ -1,0 +1,96 @@
+# SmartThings Hub — Local Control & Setup (research note)
+# Discovery is local and shipped; local control and local onboarding are NOT.
+# No local device-control API; hub is a Matter controller (not a bridge); claim +
+# Edge distribution are cloud-only. Matter multi-admin is the only local path and is
+# device-level, Matter-only, bypasses the hub. Near-mirror of vera-mios-hub.
+# Company: Samsung SmartThings (alive 2026; developer API moving to paid plan 2026-10)
+
+device:
+  id: smartthings-hub-local
+  name: SmartThings Hub (v2/v3/Aeotec/Station)
+  manufacturer: Samsung SmartThings
+  category: smart_home_hub   # free-form research-note vocab, not the closed device-specs enum
+  safety_class: LOW          # hub itself harmless; controlled loads (locks, outlets) carry own risk
+  related_spec: device-specs/devices/smartthings-hub-v2.yaml
+
+transport:
+  type: wifi
+  local_only: false          # KEY DIFFERENCE from vera: control + onboarding are cloud-mediated
+  note: >
+    mDNS discovery is fully local. Beyond that there is no documented local
+    device-control API and no local onboarding. The official control surface is
+    the SmartThings cloud (OAuth REST/SSE), which is moving to a paid plan 2026-10.
+
+lan:
+  discovery: mdns            # _smartthings._tcp :8081 primary; hedge :8766 + _matter._tcp :49722 unverified
+  control:
+    path_a_matter_multiadmin:
+      local: true
+      scope: matter-devices-only
+      note: >
+        Co-commission a Matter device joined to SmartThings into a second Matter
+        controller via multi-admin share code (QR / 11-digit). Direct LAN/Thread
+        control, no hub, no cloud, no fee. ~5-fabric limit. BYPASSES the hub;
+        needs a client-side Matter commissioner (the app has none today).
+    path_b_edge_lan_relay:
+      local: runtime           # local once running; install is cloud-gated
+      scope: hub-connected-zigbee-zwave-lan
+      note: >
+        Custom Lua Edge driver on the hub + an always-on LAN relay (edgebridge
+        pattern, e.g. toddaustin07/lantrigger). Reaches Zigbee/Z-Wave locally, but
+        install needs a Samsung dev account + cloud-enrolled driver channel.
+        Community-hack-tier; undocumented; breakable by firmware.
+    path_c_local_9495_cli_api:
+      local: true
+      scope: diagnostic-only
+      auth: cloud-minted-oauth-bearer + hub-identity-tls-pinning
+      note: >
+        Port 9495 HTTPS, GET /drivers + /drivers/logs (SSE), used by
+        smartthings-cli. Real LAN endpoint but diagnostic only (no device control)
+        and needs a cloud token.
+    path_d_hub_as_matter_bridge:
+      local: n/a
+      available: false
+      note: >
+        Does not exist. Samsung confirmed the hub does NOT bridge its
+        Zigbee/Z-Wave devices to other Matter fabrics. Controller only.
+
+protocol:
+  note: >
+    Local surfaces: _smartthings._tcp :8081 (identity), _smartthings-hedge._tcp
+    :8766 WebSocket feat=ctrl (unverified), _matter._tcp :49722 (unverified,
+    ephemeral port), and the undocumented 9495 CLI HTTPS API. None is a
+    third-party local control contract. Edge drivers run locally in Lua
+    (LuaSocket TCP/UDP/TLS) but are Samsung's on-hub runtime, not an exposed API.
+
+setup:
+  local_onboarding: false
+  note: >
+    cloud_account only — welcome code redeemed against Samsung's service. No local
+    claim path. Precedent: Samsung shut the Hub v1 cloud 2021-06-30.
+
+status:
+  apk_acquired: false
+  apk_decompiled: false
+  uuids_recovered: false      # n/a — no BLE control surface
+  discovery_recovered: true   # mDNS confirmed + shipped in app
+  control_recovered: false    # no local device-control path through the hub
+  hci_snoop_needed: false
+  cloud_dead: false           # Samsung alive 2026; developer API paid from 2026-10
+  one_time_cloud: true        # even the local 9495 token is cloud-minted
+  rejected_for_local_control: true
+  reject_reason: >
+    No local device-control API; hub is a Matter controller not a bridge (Zigbee/
+    Z-Wave children not exposed); onboarding + Edge driver distribution are cloud-
+    only. Matter multi-admin is the sole local path and is device-level, not the hub.
+  rating: partial             # discovery: confirmed; control + setup: rejected-for-local
+  references:
+    - developer.smartthings.com/docs/devices/hub-connected/edge-architecture (2026)
+    - blog.smartthings.com "A New Enhanced SmartThings API Experience" — API paid from 2026-10
+    - home-assistant.io/integrations/smartthings — cloud (Cloud Push), OAuth
+    - SmartThingsBeat/status/1522225088547807232 (2022) + techhive.com — hub is NOT a Matter bridge
+    - support.smartthings.com "SmartThings x Matter Integration" + docs.silabs.com multi-admin
+    - github.com/SmartThingsCommunity/smartthings-cli — 9495 local diagnostic API
+    - github.com/toddaustin07/lantrigger — Edge driver + edgebridge LAN relay
+    - github.com/QuiteYellow/SmartThings-Local — local CoAP-DTLS for Samsung APPLIANCES (out of scope)
+    - community.smartthings.com (2026-06) — "no local API for the hub"

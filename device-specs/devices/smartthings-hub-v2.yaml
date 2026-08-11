@@ -8,6 +8,23 @@ device:
   manufacturer_status: "active"
   protocol: "wifi"
   category: "hub"
+  openness:
+    status: "documented_api"
+    reverse_engineered: true
+    source_code: "https://github.com/SmartThingsCommunity/smartthings-cli"
+    upstream_docs:
+      - url: "https://developer.smartthings.com/docs/devices/hub-connected/edge-architecture"
+        title: "SmartThings Edge architecture"
+        covers: "On-hub Lua driver model, driver channels, LuaSocket local execution"
+      - url: "https://developer.smartthings.com/docs/api/public"
+        title: "SmartThings public API"
+        covers: "Cloud OAuth REST/SSE device control and hub management"
+    notes: >
+      documented_api rather than open: the control surface is Samsung's cloud API,
+      not a published local one. reverse_engineered because the local surfaces here
+      are reconstructed — the port-9495 API from Samsung's own open-source
+      smartthings-cli, and the _smartthings-hedge._tcp / _matter._tcp endpoints
+      from LAN probing — not from any local-API contract.
   transport: "websocket"
   notes: >
     SmartThings Hub v2 advertises local SmartThings, Edge driver, and Matter
@@ -109,6 +126,49 @@ device:
         - "Account binding token"
         - "ZigBee and Z-Wave network keys"
       issued_to_client: []
+
+cloud:
+  required: true
+  vendor_service: "Samsung SmartThings"
+  hosts:
+    - "https://api.smartthings.com"
+  auth:
+    type: "oauth2"
+    notes: >
+      A Samsung account is required to claim the hub, distribute/install Edge
+      drivers, and control devices via the public API. Even the local port-9495
+      CLI API authenticates with a cloud-minted OAuth bearer and pins the hub's
+      TLS certificate to its cloud identity. NEVER record a real token here.
+    verification: "reported"
+  failure_mode: >
+    An unclaimed hub cannot be onboarded without the cloud, and cloud-side device
+    control stops if the account or service is closed — as happened when Samsung
+    retired the Hub v1 cloud on 2021-06-30. Already-installed Edge automations keep
+    running locally, but no third-party local control can be provisioned.
+  notes: >
+    Recorded to state the dependency honestly, not as an interface to build on.
+    Free developer API access is being phased out from 2026-10; personal use moves
+    to a paid SmartThings Personal plan.
+
+local_access:
+  status: "none_known"
+  summary: >
+    No local, cloud-free path to onboard the hub or control the hub or its
+    hub-connected (Zigbee/Z-Wave) devices as shipped. Discovery is local; control
+    and setup are not.
+  covers:
+    - "mDNS discovery and stable identification on the LAN"
+  not_covered:
+    - "Hub onboarding / claiming (Samsung cloud account only)"
+    - "Device control (cloud OAuth API, or Edge drivers distributed via cloud channels)"
+    - "Zigbee/Z-Wave child devices (hub is a Matter CONTROLLER, not a bridge — not exposed to other fabrics)"
+  notes: >
+    Two narrow escape hatches exist, neither of which is local control of the hub:
+    (1) the port-9495 CLI API is local but diagnostic-only (driver list + logs) and
+    needs a cloud-minted OAuth token; (2) Matter devices joined to the hub can be
+    co-commissioned into a separate local Matter controller via Matter multi-admin —
+    device-level, Matter-only, and it bypasses the hub. Full analysis:
+    research-notes/smartthings-hub-local.md.
 
 smartthings_local_protocol:
   primary_service:

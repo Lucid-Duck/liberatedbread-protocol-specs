@@ -755,6 +755,7 @@
     "category": "hub",
     "manufacturer": "Samsung SmartThings",
     "manufacturer_status": "active",
+    "openness": "documented_api",
     "schema_version": "2020-12"
   },
   {
