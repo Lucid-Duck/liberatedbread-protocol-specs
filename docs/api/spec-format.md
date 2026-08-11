@@ -218,6 +218,30 @@ Two rules that are not judgement calls: reference specs (a `type` starting
 fields agree. `other` is for a device the list genuinely cannot describe —
 reach for it as a prompt to propose a new value, not as somewhere to leave it.
 
+### `support` — can a client drive this, or only name it?
+
+`category` says what kind of thing this is. `support` says how far a client
+gets with it once recognised: `controllable` (the same as leaving it out) or
+`identify_only`.
+
+Set `identify_only` when the spec is enough to **find and name** the device on
+the network but there is no local control surface a generic client can drive —
+a hub whose only control path is the vendor cloud (SmartThings), or a device we
+can identify but do not yet actuate. It is an explicit **demotion**, not a
+claim: the mobile app splits a scan into "Likely supported" and "Other" on this
+line, and without it a device the app can only identify rides its
+identification confidence straight into "Likely supported" and promises control
+it does not have. So it is set precisely where *not* setting it would
+over-promise, and left absent everywhere else.
+
+Keep it distinct from two neighbours it is easy to conflate:
+
+- `local_access` records whether local control is possible for **anyone**,
+  possibly with extra hardware. `support` records whether **this catalogue**
+  drives it. A device can be `local_access: native` yet `identify_only` here
+  because the control path simply is not implemented.
+- `openness` records how the protocol was *obtained*, not whether we act on it.
+
 ### `openness` — did we have to recover this?
 
 `manufacturer_status` says what the vendor is doing. `openness` says something

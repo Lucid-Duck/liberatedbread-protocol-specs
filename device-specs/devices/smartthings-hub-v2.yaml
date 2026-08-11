@@ -8,6 +8,7 @@ device:
   manufacturer_status: "active"
   protocol: "wifi"
   category: "hub"
+  support: "identify_only"   # recognised on the LAN, but no local control surface a client can drive — see local_access + research-notes/smartthings-hub-local.md
   openness:
     status: "documented_api"
     reverse_engineered: true

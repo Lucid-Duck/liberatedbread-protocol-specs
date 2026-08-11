@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- `device.support` (`controllable` | `identify_only`) — lets a spec say a device
+  can be recognised but not driven, so a consumer stops presenting identification
+  as support. The mobile app sorts a Wi-Fi scan into "Likely supported" and
+  "Other" purely on match strength, and an mDNS service-type match is its
+  strongest signal — so a hub the app can only name rode that Strong match into
+  "Likely supported" and implied a local control path it does not have. The
+  SmartThings Hub v2 is the case in hand: its `_smartthings._tcp` service names
+  it confidently, but onboarding and control are cloud-only (see its
+  `local_access` block and `research-notes/smartthings-hub-local.md`), so it is
+  now `identify_only` and the app files it under "Other" while still labelling it.
+  Absent means `controllable`/normal, so the field costs nothing on the specs
+  that do not need it; it is an explicit demotion set only where identification
+  would otherwise over-promise. Distinct from `local_access` (whether ANYONE can
+  control it locally) and `openness` (how the protocol was obtained)
 - `endianness` on BLE characteristic `format` fields — same key, same
   `little`/`big` enum and same `little` default as a bus message field, which
   is where it was already declared. Six BLE fields across `xiaomi-miflora` and
