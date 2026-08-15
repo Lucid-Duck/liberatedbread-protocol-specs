@@ -727,3 +727,10 @@ helpful_urls:
   - url: "https://pypi.org/project/python-rabbitair/"
     title: "python-rabbitair on PyPI"
     description: "Released packages 0.0.2-0.0.8 (0.0.1 yanked); 0.0.8 is the version pinned by Home Assistant."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `rabbitair` integration covers this device.

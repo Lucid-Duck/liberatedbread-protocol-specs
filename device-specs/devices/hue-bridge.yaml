@@ -648,3 +648,9 @@ entities:
       worked pass of its own (instances plus a per-type mapping), not a
       guessed mapping here.
 
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `hue` integration covers this bridge.

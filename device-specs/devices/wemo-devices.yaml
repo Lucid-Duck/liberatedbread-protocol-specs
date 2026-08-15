@@ -2618,3 +2618,10 @@ scheduling:
     the rules database is worth the trouble: close the app, or let the phone
     sleep, and the schedule does not happen.
   verification: "reported"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: true
+  reason: >-
+    Home Assistant's built-in `wemo` integration exists but requires static IPs to stay reliable; this spec's SSDP-based adoption does not.

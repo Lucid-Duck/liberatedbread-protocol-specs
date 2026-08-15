@@ -1238,3 +1238,10 @@ entities:
     name: "TV State"
     state_topic: "/remoteapp/mobile/broadcast/ui_service/state"
     notes: "The statetype field (fake_sleep_0 = standby; fake_sleep_1 = waking, NOT asleep; remote_launcher = home; livetv/sourceswitch carry channel/source detail)."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: true
+  reason: >-
+    Collides with `dlna_dmr` on the generic MediaRenderer search target, but dlna_dmr only does DLNA playback; this spec's remoteapp MQTT control is not covered by it.

@@ -228,3 +228,9 @@ entities:
       an unpaired unit, which is why no command is declared rather than one
       being guessed at.
 
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `rachio` integration covers this device.

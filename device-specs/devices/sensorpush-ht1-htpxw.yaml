@@ -275,3 +275,10 @@ source:
     - cryptomcgrath/sensorpush-bleak (5★)
     - Bluetooth-Devices/sensorpush-ble
   date_extracted: "2026-07-28"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `sensorpush` integration covers this device.

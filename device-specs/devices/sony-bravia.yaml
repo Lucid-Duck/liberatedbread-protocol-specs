@@ -1411,3 +1411,10 @@ entities:
       Info reports content, and inside an Android app it reports nothing.
       Selecting an option means POST /sony/appControl setActiveApp with
       {"uri": <option value>}; see the Set Active App endpoint.
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `braviatv` integration covers this device.

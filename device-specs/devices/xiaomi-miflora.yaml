@@ -376,3 +376,10 @@ entities:
     state_characteristic: "00001a02-0000-1000-8000-00805f9b34fb"
     state_mapping:
       value: "battery"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `xiaomi_ble` integration covers this device, passively.

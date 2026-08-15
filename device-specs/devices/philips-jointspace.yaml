@@ -1555,3 +1555,10 @@ entities:
     name: "Current Application"
     state_topic: "/{api_version}/activities/current"
     notes: "v6 Android only; an intent object. Broadcast TV reports the PlayTvActivity component, not null."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `philips_js` integration covers this device.

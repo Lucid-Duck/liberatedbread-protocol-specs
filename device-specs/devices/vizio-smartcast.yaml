@@ -1102,3 +1102,10 @@ entities:
     name: "Current App"
     state_topic: "/app/current"
     notes: "ITEM.VALUE is {APP_ID, NAME_SPACE, MESSAGE}; empty VALUE means no app running. Mapping to a name needs the external app catalogue."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `vizio` integration covers this device.

@@ -633,3 +633,10 @@ helpful_urls:
     url: "https://github.com/Bluetooth-Devices/inkbird-ble"
   - title: "Home Assistant Inkbird integration docs"
     url: "https://www.home-assistant.io/integrations/inkbird"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `inkbird` integration covers this device, passively.

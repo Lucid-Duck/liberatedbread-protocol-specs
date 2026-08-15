@@ -250,3 +250,9 @@ entities:
     name: "Matter Controller"
     state_topic: "matter://{hub_id}"
 
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `smartthings` integration covers this hub.

@@ -815,3 +815,39 @@ device-specs/
 5. Submit a PR
 
 Even partial specs are welcome -- someone else can fill in the gaps.
+
+## `home_assistant:` — one consumer's judgement
+
+Everything else in a spec describes the device. This block records a judgement
+about **Home Assistant's ecosystem**, which is why it is namespaced under the
+consumer's name rather than sitting loose at the top level.
+
+```yaml
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `wled` integration covers this device.
+```
+
+`discovery` governs **discovery only**. A device is always addable by hand
+whatever this says; what the flag decides is whether the integration claims the
+advertisement.
+
+| Value | Meaning |
+| --- | --- |
+| omitted | Let the integration decide, by comparing against Home Assistant's own built-in discovery tables. |
+| `false` | A built-in integration already covers this device. Two integrations racing for one advertisement helps nobody. |
+| `true` | Keep discovery **despite** an automatic collision — right when a built-in matches the same announcement but does something narrower with it. |
+
+`reason` is required whenever `discovery` is set. The value is an opinion about
+another project's coverage, and a future reader cannot reconstruct it: name the
+integration, and say what it does or does not cover. Two worked examples from
+the catalogue —
+
+- `hisense-vidaa` sets `true`: it collides with `dlna_dmr` on the generic
+  `MediaRenderer:1` search target, but `dlna_dmr` only does DLNA playback and
+  the spec's remoteapp MQTT control is not covered by it.
+- `wemo-devices` sets `true`: the built-in `wemo` integration exists but needs
+  static IPs to stay reliable.
+
+Consumers other than Home Assistant should ignore this block entirely.

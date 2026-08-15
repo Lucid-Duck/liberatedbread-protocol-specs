@@ -310,3 +310,10 @@ helpful_urls:
     description: >-
       Original TP357 connected-mode client, and the source of the history opcodes and the
       record-buffer limits recorded here.
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `thermopro` integration covers this device, passively.

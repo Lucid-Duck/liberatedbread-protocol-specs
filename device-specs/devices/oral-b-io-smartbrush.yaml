@@ -468,3 +468,10 @@ helpful_urls:
   - title: "Oral-B firmware host"
     url: "https://fw.iot-dev.alchemy.codes"
     description: "The official firmware host hardcoded in the vendor app."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `oralb` integration covers this device.

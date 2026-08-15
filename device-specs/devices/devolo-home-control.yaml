@@ -374,3 +374,10 @@ helpful_urls:
 #   record. The OEM device identities (MT02755 etc.) do not appear
 #   anywhere in the app; they stay unverified. APK retained in
 #   workspace/apks/ (gitignored), not committed per clean-room rules.
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `devolo_home_control` integration covers this hub.

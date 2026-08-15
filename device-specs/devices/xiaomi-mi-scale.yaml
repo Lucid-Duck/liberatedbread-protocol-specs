@@ -305,3 +305,10 @@ entities:
       "0": "kg"
       "1": "lbs"
       "2": "jin"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `xiaomi_ble` integration covers this device, passively.

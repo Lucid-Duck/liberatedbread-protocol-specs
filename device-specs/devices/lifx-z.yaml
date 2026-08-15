@@ -665,3 +665,9 @@ entities:
       turn_off: "turn_off"
       set_color: "set_color"
 
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `lifx` integration covers this device. It discovers by DHCP, so the automatic check cannot see the overlap.

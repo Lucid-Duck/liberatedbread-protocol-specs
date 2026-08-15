@@ -273,3 +273,10 @@ helpful_urls:
   - title: "Home Assistant: Inkbird integration"
     url: "https://www.home-assistant.io/integrations/inkbird"
     description: "Where the parser runs in production, and the supported-model list."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `inkbird` integration covers this device, passively.

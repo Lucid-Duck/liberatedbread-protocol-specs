@@ -1020,3 +1020,10 @@ entities:
   # a select here would promise a picker no transport can populate. The
   # launch side exists (commands.launch_app, REST) for a consumer that
   # already knows an app id.
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `samsungtv` integration covers this device.

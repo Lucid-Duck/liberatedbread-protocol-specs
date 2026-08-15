@@ -866,3 +866,10 @@ entities:
     state_topic: "/json/info"
     state_mapping:
       state: "info.uptime"
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `wled` integration covers this device.

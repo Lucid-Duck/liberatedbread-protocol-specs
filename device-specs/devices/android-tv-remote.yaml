@@ -814,3 +814,10 @@ entities:
     name: "Power State"
     icon: "mdi:power"
     notes: "Pushed as remote_start { started }; true while the TV is on."
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `androidtv_remote` integration covers this device.

@@ -387,3 +387,10 @@ helpful_urls:
     url: "https://fccid.io/2AQA6-H5075"
     description: >-
       FCC filing; confirms the Telink SoC and the grantee recorded in the hardware notes.
+
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `govee_ble` integration covers this device, passively.

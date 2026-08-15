@@ -202,3 +202,9 @@ entities:
       close_cover: "LEAP CreateRequest /zone/{id}/commandprocessor CommandType=GoToLevel"
       set_cover_position: "LEAP CreateRequest /zone/{id}/commandprocessor CommandType=GoToLevel (tilt uses GoToTilt)"
 
+# How the Home Assistant integration treats this device. Governs discovery
+# only -- the device stays addable by hand either way.
+home_assistant:
+  discovery: false
+  reason: >-
+    Home Assistant's built-in `lutron_caseta` integration covers this bridge.
